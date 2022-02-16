@@ -1,10 +1,30 @@
 import * as React from 'react';
-import './Header.css'
+import './Header.css';
+import { Link } from 'react-router-dom';
+import { Button, Typography } from '@mui/material';
+import { StarBorder } from '@mui/icons-material';
+import HistoryIcon from '@mui/icons-material/History';
+import EthLogo from '../../assets/eth-logo.svg';
+import BnbLogo from '../../assets/bnb-logo.svg';
+import AvaxLogo from '../../assets/avax-logo.svg';
+import MaticLogo from '../../assets/matic-logo.svg'
 
 const Header = () => {
   return (
     <div id="banner">
-
+      <div className="banner-container">
+        <div><Typography variant="h1" component="h2" color="primary" sx={{ fontWeight: "700", display: 'inline', fontSize: '5.3rem' }}>Create a Token in less than 1 minute</Typography><HistoryIcon color="secondary" sx={{ width: '4em', height: '3em' }} /></div>
+        <Link to='create-tokens'><Button variant="contained" startIcon={<StarBorder sx={{ width: '2em', height: '2em' }} />} sx={{ marginTop: '2.25rem', width: '80%', borderRadius: '2em', fontSize: '1.75em' }}>CREATE TOKEN</Button></Link>
+        <div>
+          <Typography sx={{ marginTop: '2.25rem', marginBottom: '1.5rem'}} variant="h5" component="h3">Create your Token in:</Typography>
+          <div className="container-logos">
+            <img className="network-logos" src={EthLogo} alt="eth logo" width="110px" height="110px" />
+            <img className="network-logos" src={BnbLogo} alt="eth logo" width="110px" height="110px" />
+            <img className="network-logos" src={AvaxLogo} alt="eth logo" width="110px" height="110px" />
+            <img className="network-logos" src={MaticLogo} alt="eth logo" width="110px" height="110px" />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

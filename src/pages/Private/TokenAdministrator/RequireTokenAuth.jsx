@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { ethers } from 'ethers';
-import { factory_address, factory_abi } from '../../../contract/contract'
+import { factory_rinkeby_address, factory_abi } from '../../../contract/contract'
 import { useLocation, Navigate, Outlet, useParams } from 'react-router-dom';
 import { useUser } from '../../../context/UserContext';
 import { Skeleton } from '@mui/material';
@@ -21,7 +21,7 @@ const RequireTokenAuth = () => {
                 // Instancio el contrato
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
-                let contract = new ethers.Contract(factory_address, factory_abi, signer);
+                let contract = new ethers.Contract(factory_rinkeby_address, factory_abi, signer);
                 // Busco en los eventos newToken solo los tokens que deployo myAddress
                 let filterTo = contract.filters.newToken(tokenId);
                 contract.queryFilter(filterTo)

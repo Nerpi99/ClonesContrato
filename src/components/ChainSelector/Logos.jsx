@@ -1,7 +1,7 @@
-export const AvaxLogo = () => (
+export const AvaxLogo = ({ width = '25', height = '25' }) => (
     <svg
-        width="25"
-        height="25"
+        width={width}
+        height={height}
         viewBox="0 0 30 30"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -17,10 +17,10 @@ export const AvaxLogo = () => (
     </svg>
 );
 
-export const BSCLogo = () => (
+export const BSCLogo = ({ width = '25', height = '25' }) => (
     <svg
-        width="25"
-        height="25"
+        width={width}
+        height={height}
         viewBox="0 0 30 30"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -36,10 +36,10 @@ export const BSCLogo = () => (
     </svg>
 );
 
-export const ETHLogo = () => (
+export const ETHLogo = ({ width = '25', height = '25' }) => (
     <svg
-        width="25"
-        height="25"
+        width={width}
+        height={height}
         viewBox="0 0 30 30"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -73,10 +73,10 @@ export const ETHLogo = () => (
     </svg>
 );
 
-export const PolygonLogo = () => (
+export const PolygonLogo = ({ width = '25', height = '25' }) => (
     <svg
-        width="25"
-        height="25"
+        width={width}
+        height={height}
         viewBox="0 0 30 30"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

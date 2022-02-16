@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { ethers } from 'ethers';
 import TokensTable from "../../components/TokensTable/TokensTable";
-import { factory_address, factory_abi } from "../../contract/contract";
+import { factory_rinkeby_address, factory_abi } from "../../contract/contract";
 import { Skeleton } from '@mui/material';
 
 const TokensCreated = () => {
@@ -18,7 +18,7 @@ const TokensCreated = () => {
                 // Instancio el contrato
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
-                let contract = new ethers.Contract(factory_address, factory_abi, signer);
+                let contract = new ethers.Contract(factory_rinkeby_address, factory_abi, signer);
                 // Busco en todos los eventos
                 let filterTo = contract.filters.newToken();
                 contract.queryFilter(filterTo)

@@ -1,4 +1,4 @@
-.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
   padding: 7px 14px !important;
   padding-right: 32px !important;
   min-width: 150px !important;
@@ -10,16 +10,19 @@ svg.MuiSelect-icon {
   color: white;
 }
 div.tokenform {
+  width: 95% !important;
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem;
+}
+div.tokenform > .css-vnk7b3-MuiInputBase-root-MuiOutlinedInput-root {
   width: 100% !important;
   display: flex;
   justify-content: center;
+  color: #6D26D7;
+  border: 1px solid #BB6DF3;
+  border-radius: 5px;
 }
-div.tokenform > .css-rqahul-MuiInputBase-root-MuiOutlinedInput-root {
-  width: 80% !important;
-  display: flex;
-  justify-content: center;
-}
-
-.css-1wvjsdj-MuiInputBase-root-MuiOutlinedInput-root:hover {
-  border: 1px solid #663dbd;
+div.tokenform svg.MuiSelect-icon {
+  color: #6D26D7;
 }

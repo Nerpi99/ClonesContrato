@@ -998,6 +998,7 @@ export const factory_abi = [
 	}
 ]
 
-
 export const mitoken_address = "0x2f2E9BD5B4C2BF6C6b974Cd300C2E71FA1F85B44"
-export const factory_address = "0x2Fac6567ae47Dc5674A96cC19ACb29B6fda050ef"
+export const factory_rinkeby_address = "0x2Fac6567ae47Dc5674A96cC19ACb29B6fda050ef"
+// export const factory_mumbai_address = "";
+// export const factory_bsc_address = "";
