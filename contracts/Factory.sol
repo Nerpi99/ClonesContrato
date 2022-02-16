@@ -1,18 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
-import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20BurnableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
-import "@openzeppelin/contracts/proxy/Clones.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "./MyToken.sol";
 
-
-
-contract Factory is Ownable {
+contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
     // VARIABLES
     struct Token {
         address tokenAddress;
@@ -26,6 +17,7 @@ contract Factory is Ownable {
     mapping(address => Token[]) public clones;
     uint256 public fee;
     uint256 public refund;
+    address [] users;
     // EVENTS
     event newToken(
         address indexed _tokenAddress,
@@ -36,7 +28,7 @@ contract Factory is Ownable {
         uint8 _decimals
     );
 
-    constructor(address _implementation) {
+    function initialize (address _implementation) initializer public{
         implementation = _implementation;
         fee = 9781055 gwei;
     }
@@ -54,7 +46,7 @@ contract Factory is Ownable {
         // Requiero que mande la guita correspondiente
         require(msg.value >= fee, "El valor deberia ser mayor a la tarifa");
         // Clona
-        address clone = Clones.clone(implementation);
+        address clone = ClonesUpgradeable.clone(implementation);
         MyToken(clone).initialize(
             _name,
             _symbol,
@@ -68,6 +60,10 @@ contract Factory is Ownable {
         clones[msg.sender].push(
             Token(clone, _name, _symbol, msg.sender, _supply, block.timestamp)
         );
+        // Agrega un nuevo usuario
+        if (clones[msg.sender].length == 0){
+            users.push(msg.sender);
+        }
         // Si llega a mandar guita de mas se le devuelve
         refund = msg.value - fee;
         if (refund > 0) {
@@ -82,8 +78,12 @@ contract Factory is Ownable {
         fee = _newFee * (1 gwei);
     }
 
-    function attack() public payable onlyOwner {
-        address payable addr = payable(owner());
-        selfdestruct(addr);
+    function getClones(address _address) public view returns (Token [] memory){
+        return clones[_address];
     }
+
+    function _authorizeUpgrade(address newImplementation)
+        internal
+        override
+    {}
 }

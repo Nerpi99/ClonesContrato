@@ -7,16 +7,15 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
-import "@openzeppelin/contracts/proxy/Clones.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/ClonesUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
 contract MyToken is
     Initializable,
     ERC20Upgradeable,
     ERC20BurnableUpgradeable,
     PausableUpgradeable,
-    AccessControlUpgradeable,
-    UUPSUpgradeable
+    AccessControlUpgradeable
 {
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
@@ -35,7 +34,7 @@ contract MyToken is
         __ERC20Burnable_init();
         __Pausable_init();
         __AccessControl_init();
-        __UUPSUpgradeable_init();
+        //__UUPSUpgradeable_init();
         // Creo el supply inicial
         _mint(_owner, _initialSupply);
         // Creo los roles
@@ -71,9 +70,9 @@ contract MyToken is
         super._beforeTokenTransfer(from, to, amount);
     }
 
-    function _authorizeUpgrade(address newImplementation)
-        internal
-        override
-        onlyRole(UPGRADER_ROLE)
-    {}
+    // function _authorizeUpgrade(address newImplementation)
+    //     internal
+    //     override
+    //     onlyRole(UPGRADER_ROLE)
+    // {}
 }
