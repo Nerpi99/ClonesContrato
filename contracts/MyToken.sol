@@ -2,47 +2,26 @@
 pragma solidity ^0.8.2;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20BurnableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/ClonesUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20BurnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 
-contract MyToken is
-    Initializable,
-    ERC20Upgradeable,
-    ERC20BurnableUpgradeable,
-    PausableUpgradeable,
-    AccessControlUpgradeable
-{
-    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
-    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
-    bytes32 public constant UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
+contract MyToken is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, PausableUpgradeable, OwnableUpgradeable {
+    
+    //constructor() ERC20("MyToken", "MTK") {}
     uint8 newDecimals;
 
-    function initialize(
-        string memory _name,
-        string memory _symbol,
-        address _owner,
-        uint256 _initialSupply,
-        uint8 _decimals
-    ) public initializer {
-        // Inicio el ERC 20
+    function initialize(string memory _name, string memory _symbol, address owner, uint _supply, uint8 _decimals) initializer public {
         __ERC20_init(_name, _symbol);
         __ERC20Burnable_init();
         __Pausable_init();
-        __AccessControl_init();
-        //__UUPSUpgradeable_init();
-        // Creo el supply inicial
-        _mint(_owner, _initialSupply);
-        // Creo los roles
-        _grantRole(DEFAULT_ADMIN_ROLE, _owner);
-        _grantRole(MINTER_ROLE, _owner);
-        _grantRole(UPGRADER_ROLE, _owner);
-        _grantRole(PAUSER_ROLE, _owner);
-        // Seteo los decimales
+        __Ownable_init();
+        _mint(owner, _supply);
         newDecimals = _decimals;
     }
 
@@ -50,29 +29,23 @@ contract MyToken is
         return newDecimals;
     }
 
-    function pause() public onlyRole(PAUSER_ROLE) {
+    function pause() public onlyOwner {
         _pause();
     }
 
-    function unpause() public onlyRole(PAUSER_ROLE) {
+    function unpause() public onlyOwner {
         _unpause();
     }
 
-    function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
+    function mint(address to, uint256 amount) public onlyOwner {
         _mint(to, amount);
     }
 
-    function _beforeTokenTransfer(
-        address from,
-        address to,
-        uint256 amount
-    ) internal override whenNotPaused {
+    function _beforeTokenTransfer(address from, address to, uint256 amount)
+        internal
+        whenNotPaused
+        override
+    {
         super._beforeTokenTransfer(from, to, amount);
     }
-
-    // function _authorizeUpgrade(address newImplementation)
-    //     internal
-    //     override
-    //     onlyRole(UPGRADER_ROLE)
-    // {}
 }

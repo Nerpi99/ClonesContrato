@@ -10,16 +10,17 @@ const factory_ = artifacts.require('Factory')
 contract('test', async accounts => {
 
     before(async () => {
-        tokenProxy = await deployProxy(token_, {initializer: false});
+        //tokenProxy = await deployProxy(token_, {initializer: false});
         token = await token_.new()
         factory = await deployProxy(factory_, [token.address]);
 
         console.log("token:", token.address)
-        console.log("tokenProxy:", tokenProxy.address)
+        //console.log("tokenProxy:", tokenProxy.address)
         console.log("factory:", factory.address)
     });
     
     it('clone', async function() {
+        console.log(await factory.getClones(accounts[0]))
 
         await factory.clonar("1", "1", 1000, 18, { from: accounts[1], value: (web3.utils.toWei("9781055", "Gwei")) })
         await factory.clonar("2", "2", 100, 18,  { from: accounts[0], value: (web3.utils.toWei("9781055", "Gwei")) })
