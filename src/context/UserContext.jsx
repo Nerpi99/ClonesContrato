@@ -37,8 +37,8 @@ export const UserProvider = ({ children }) => {
             }
             const accounts = await ethereum.request({ method: "eth_requestAccounts" });
             console.log("Connected", accounts[0]);
-            checkWallet();
-
+            await checkWallet();
+            window.location.reload();
         } catch (error) {
             console.error(error);
         }
@@ -47,7 +47,7 @@ export const UserProvider = ({ children }) => {
     window.ethereum.on('accountsChanged', async () => {
         const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
         setCurrentAccount(accounts[0]);
-        console.log(`Se cambio la cuenta a: ${accounts[0]}`)
+        console.log(`The account has changed to: ${accounts[0]}`)
     });
 
     return (

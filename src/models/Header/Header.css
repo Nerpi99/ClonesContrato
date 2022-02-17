@@ -5,10 +5,10 @@
 }
 .banner-container {
     margin: 0 5%;
-    margin-top: 13rem;
+    margin-top: 15rem;
     display: flex;
     flex-direction: column;
-    max-width: 40%;
+    max-width: 30%;
     text-align: left;
 }
 @media (min-width: 600px) {
@@ -23,4 +23,8 @@
 }
 .network-logos {
     margin-right: 2rem;
+}
+
+.network-logos-eth {
+    margin-right: 0.5rem;
 }

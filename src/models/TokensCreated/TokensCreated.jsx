@@ -2,13 +2,17 @@
 import * as React from 'react';
 import { ethers } from 'ethers';
 import TokensTable from "../../components/TokensTable/TokensTable";
-import { factory_rinkeby_address, factory_abi } from "../../contract/contract";
+import { factory_abi } from "../../contract/contract";
 import { Skeleton } from '@mui/material';
+import { useNetwork } from '../../context/NetworkContext';
 
 const TokensCreated = () => {
     // Variables
     const [loading, setLoading] = React.useState(true);
     const [tokensCreated, setTokensCreated] = React.useState([]);
+
+    // NetworkContext
+    const { contractAddress } = useNetwork();
 
     // functions
     const getAllTokens = async () => {
@@ -18,12 +22,12 @@ const TokensCreated = () => {
                 // Instancio el contrato
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
-                let contract = new ethers.Contract(factory_rinkeby_address, factory_abi, signer);
+                let contract = new ethers.Contract(contractAddress, factory_abi, signer);
                 // Busco en todos los eventos
                 let filterTo = contract.filters.newToken();
                 contract.queryFilter(filterTo)
                     .then((event) => setTokensCreated(event.reverse()))
-                    .catch(() => console.error(`Flasho`))
+                    .catch((error) => console.error(`Flasho`, error))
             }
         } catch (err) {
             console.error(err);

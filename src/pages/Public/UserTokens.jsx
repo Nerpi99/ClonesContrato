@@ -3,7 +3,9 @@ import MyTokens from '../../models/MyTokens/MyTokens';
 
 const UserTokens = () => {
     return (
-        <MyTokens />
+        <div id="user-tokens">
+            <MyTokens />
+        </div>
     )
 }
 

@@ -1,5 +1,5 @@
 // TOKEN ABI
-export const mitoken_abi = [
+export const myToken_abi = [
 	{
 		"anonymous": false,
 		"inputs": [
@@ -998,7 +998,14 @@ export const factory_abi = [
 	}
 ]
 
-export const mitoken_address = "0x2f2E9BD5B4C2BF6C6b974Cd300C2E71FA1F85B44"
+//RINKEBY
+export const myToken_rinkeby_address = "0x2f2E9BD5B4C2BF6C6b974Cd300C2E71FA1F85B44"
 export const factory_rinkeby_address = "0x2Fac6567ae47Dc5674A96cC19ACb29B6fda050ef"
-// export const factory_mumbai_address = "";
+
+// MUMBAI
+export const myToken_mumbai_address = "0x48E43E152B95182AFC76b7d5FE52aEAB5BB39D37"
+export const factory_mumbai_address = "0xc0724CD42dD6372FfC4F20C5196f768959E6fa8e";
+
+// BINANCE SMART CHAIN
+// export const myToken_bsc_address = ""
 // export const factory_bsc_address = "";

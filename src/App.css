@@ -32,10 +32,11 @@ div#loading {
   height: 100vh; 
 }
 /* CREATE TOKEN */
-div#create-token {
+div#create-token, div#user-tokens {
   min-width: 100vw;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background: no-repeat center right url('./assets/FondoHome02.svg');

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ethers } from 'ethers';
+import { factory_rinkeby_address, factory_mumbai_address } from '../contract/contract'
 
 const menuItems = [
     {
@@ -9,33 +10,9 @@ const menuItems = [
         currencySymbol: "ETH",
     },
     {
-        key: "0x539",
-        value: "Local Chain",
-        rpcurl: "",
-        currencySymbol: "ETH",
-    },
-    {
-        key: "0x3",
-        value: "Ropsten Testnet",
-        rpcurl: "https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
-        currencySymbol: "ETH",
-    },
-    {
         key: "0x4",
         value: "Rinkeby Testnet",
         rpcurl: "https://rinkey.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
-        currencySymbol: "ETH",
-    },
-    {
-        key: "0x2a",
-        value: "Kovan Testnet",
-        rpcurl: "https://kovan.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
-        currencySymbol: "ETH",
-    },
-    {
-        key: "0x5",
-        value: "Goerli Testnet",
-        rpcurl: "https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
         currencySymbol: "ETH",
     },
     {
@@ -83,13 +60,42 @@ NetworkContext.displayName = "NetworkContext";
 export const NetworkProvider = ({ children }) => {
     // Variables
     const [currentNetwork, setCurrentNetwork] = React.useState("");
+    const [contractAddress, setContractAddress] = React.useState("");
 
     // Funciones
     const getNetwork = async () => {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const network = await provider.getNetwork();
-        const newNetwork = menuItems.filter(menuItem => menuItem.key === `0x${network.chainId}`);
-        setCurrentNetwork(newNetwork[0].value);
+        try {
+            const { ethereum } = window;
+            if (ethereum) {
+                const provider = new ethers.providers.Web3Provider(ethereum);
+                const network = await provider.getNetwork();
+                let keyNetwork;
+                switch (network.chainId) {
+                    case 80001:
+                        keyNetwork = "0x13881"
+                        break
+                    default:
+                        keyNetwork = "0x4"
+                        break
+                }
+                const newNetwork = menuItems.filter(menuItem => menuItem.key === keyNetwork);
+                setCurrentNetwork(newNetwork[0].value);
+                switch (newNetwork[0].value) {
+                    case 'Rinkeby Testnet':
+                        setContractAddress(factory_rinkeby_address)
+                        break
+                    case 'Polygon Mumbai Testnet':
+                        setContractAddress(factory_mumbai_address)
+                        break
+                    default:
+                        setContractAddress(factory_rinkeby_address)
+                        break
+                }
+            }
+        } catch (e) {
+            console.error(e)
+        }
+        console.log(contractAddress);
     }
     const switchNetwork = async (e) => {
         const network = menuItems.filter(menuItem => menuItem.value === e.target.value);
@@ -126,13 +132,26 @@ export const NetworkProvider = ({ children }) => {
             }
         }
         setCurrentNetwork(e.target.value)
+        switch (e.target.value) {
+            case 'Rinkeby Testnet':
+                setContractAddress(factory_rinkeby_address)
+                break
+            case 'Polygon Mumbai Testnet':
+                setContractAddress(factory_mumbai_address)
+                break
+            default:
+                setContractAddress(factory_rinkeby_address)
+                break
+        }
+        console.log(contractAddress);
     }
     React.useEffect(() => {
         getNetwork();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
-        <NetworkContext.Provider value={{ currentNetwork, getNetwork, switchNetwork }}>
+        <NetworkContext.Provider value={{ currentNetwork, getNetwork, switchNetwork, contractAddress }}>
             {children}
         </NetworkContext.Provider>
     );

@@ -10,9 +10,6 @@ const TokensTable = ({ tokens }) => {
     const link = "https://rinkeby.etherscan.io/token/";
     const addToMetamask = async (addr, sym, dec) => {
         console.log(`Comienza la funcion Add to Metamask --`)
-        console.log(addr)
-        console.log(sym)
-        console.log(dec)
         try {
             const { ethereum } = window;
             if (ethereum) {
@@ -44,8 +41,8 @@ const TokensTable = ({ tokens }) => {
     }
 
     return (
-        <TableContainer component={Paper} sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Table sx={{ minWidth: 650, maxWidth: '75%', margin: '1rem 1rem 3rem 1rem', border: 'solid rgba(0, 0, 0, 0.12) 1px' }} aria-label="simple table">
+        <TableContainer component={Paper} sx={{ display: 'flex', justifyContent: 'center', borderStyle: 'solid', borderWidth: '1px', borderColor: 'rgba(0, 0, 0, 0.2)', boxShadow: 'rgb(0 0 0 / 19%) 0px 10px 20px, rgb(0 0 0 / 23%) 0px 6px 6px', maxWidth: '75%', borderRadius: '22px', marginTop: '13rem', marginBottom: '5rem'}}>
+            <Table sx={{ minWidth: 650, margin: 1 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
                         <TableCell>Token Name</TableCell>
@@ -74,7 +71,7 @@ const TokensTable = ({ tokens }) => {
                             {/* ACA VA A IR EL LINK AL DASHBOARD DE TOKENS */}
                             {/* <TableCell><Link to={`/token/${token.args._tokenAddress}`}><IconButton><AssistantIcon /></IconButton></Link></TableCell> */}
                             <TableCell align="center"><Button variant="contained" type="submit" sx={{ fontSize: '0.75rem' }} onClick={() => addToMetamask(token.args._tokenAddress, token.args._symbol, token.args._decimals)}>Add to Metamask</Button></TableCell>
-                            <TableCell align="center"><a href={`${link}${token.args._tokenAddress}`} target="_blank" rel="noreferrer"><Button variant="contained" sx={{ fontSize: '0.75rem' }} type="submit" endIcon={<OpenInNewIcon />}>Open in etherscan</Button></a></TableCell>
+                            <TableCell align="center"><a href={`${link}${token.args._tokenAddress}`} target="_blank" rel="noreferrer"><Button variant="contained" sx={{ fontSize: '0.75rem' }} endIcon={<OpenInNewIcon />}>Open in etherscan</Button></a></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

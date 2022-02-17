@@ -11,7 +11,7 @@ import backLogo from "../../assets/logodaaps.svg";
 const Navbar = () => {
     // Variables
     const [loading, setLoading] = React.useState(true)
-    const { currentAccount, connect, checkWallet } = useUser();
+    const { currentAccount, adminAddress, connect, checkWallet } = useUser();
     const connectWallet = () => { connect() }
     const checkIfWalletIsConnected = () => { checkWallet() }
 
@@ -36,7 +36,9 @@ const Navbar = () => {
                         : currentAccount === ""
                             ? <Button color="info" onClick={connectWallet}>CONNECT WALLET</Button>
                             : <>
-                                <Button variant="outlined" color="info" startIcon={<AccountCircle />} sx={{ height: '39px', marginRight: '1rem'}}>
+                                <Link to="/my-tokens"><Button variant="outlined" color="info"  sx={{ height: '39px', marginRight: '1rem' }}>Go to my Tokens</Button></Link>
+                                {currentAccount.toLowerCase() === adminAddress.toLowerCase() && <Link to="/admin"><Button variant="outlined" color="info"  sx={{ height: '39px', marginRight: '1rem' }}>Go to Admin</Button></Link>}
+                                <Button variant="outlined" color="info" startIcon={<AccountCircle />} sx={{ height: '39px', marginRight: '1rem' }}>
                                     {currentAccount.slice(0, 5)}...{currentAccount.slice(37)}
                                 </Button>
                                 <ChainSelector />

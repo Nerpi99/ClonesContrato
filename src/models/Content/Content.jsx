@@ -14,9 +14,9 @@ import iconPaso3 from '../../assets/iconPaso3.svg';
 const Content = () => {
   return (
     <>
-      <h1>HOW IT WORKS!</h1>
-      <h3>Have your ERC20 TOken in less than 1 minute</h3>
-      <h4>Simple, secure and fast. No coding required</h4>
+      <h1 className="container-title">HOW IT WORKS!</h1>
+      <h3 className="container-subtitle">Have your ERC20 TOken in less than 1 minute</h3>
+      <h4 className="container-text">Simple, secure and fast. No coding required</h4>
 
       <Grid container spacing={0}>
         <Grid item xs={4}>
