@@ -172,11 +172,13 @@ const TokenForm = () => {
             case "0xc0724CD42dD6372FfC4F20C5196f768959E6fa8e":
                 setCoin('matic')
                 break
+            case "0xb9a1aca94cdDB22c5C667f962b1e7E605482266e":
+                setCoin('bsc')
+                break                
             default:
-                setCoin('ether')
+                setCoin('bsc')
                 break
         }
-        console.log('entra aca--')
     }, [contractAddress])
     React.useEffect(() => {
         setDecimalSupply(supply + ((10 ** decimals).toString()).slice(1))

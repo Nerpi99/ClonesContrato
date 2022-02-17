@@ -27,7 +27,7 @@ const MyTokens = () => {
                 const myAddress = await signer.getAddress();
                 // Busco en los eventos newToken solo los tokens que deployo myAddress
                 let filterTo = contract.filters.newToken(null, null, null, myAddress, null, null);
-                contract.queryFilter(filterTo)
+                contract.queryFilter(filterTo, -4900)
                     .then((event) => setMyTokens(event.reverse()))
                     .catch((error) => console.error(`Flasheo:`, error));
             }

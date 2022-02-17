@@ -1007,5 +1007,5 @@ export const myToken_mumbai_address = "0x48E43E152B95182AFC76b7d5FE52aEAB5BB39D3
 export const factory_mumbai_address = "0xc0724CD42dD6372FfC4F20C5196f768959E6fa8e";
 
 // BINANCE SMART CHAIN
-// export const myToken_bsc_address = ""
-// export const factory_bsc_address = "";
+export const myToken_bsc_address = "0x6DbB7e3440B3a708e97B6b73B7954Ee241a1Bbcd"
+export const factory_bsc_address = "0xb9a1aca94cdDB22c5C667f962b1e7E605482266e";

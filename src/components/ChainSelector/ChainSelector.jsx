@@ -13,13 +13,13 @@ const menuItems = [
     //     currencySymbol: "ETH",
     //     icon: <ETHLogo />,
     // },
-    // {
-    //     key: "0x38",
-    //     value: "Binance Smart Chain",
-    //     rpcurl: "https://bsc-dataseed.binance.org/",
-    //     currencySymbol: "BNB",
-    //     icon: <BSCLogo />,
-    // },
+    {
+        key: "0x38",
+        value: "Binance Smart Chain",
+        rpcurl: "https://bsc-dataseed.binance.org/",
+        currencySymbol: "BNB",
+        icon: <BSCLogo />,
+    },
     // {
     //     key: "0x89",
     //     value: "Polygon Mainnet",

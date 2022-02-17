@@ -34,6 +34,8 @@ export const UserProvider = ({ children }) => {
             if (!ethereum) {
                 console.log("no hay metamask instalado");
                 return;
+            } else {
+                console.log('aca no deberia entrar')
             }
             const accounts = await ethereum.request({ method: "eth_requestAccounts" });
             console.log("Connected", accounts[0]);
@@ -44,11 +46,14 @@ export const UserProvider = ({ children }) => {
         }
     }
 
-    window.ethereum.on('accountsChanged', async () => {
-        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-        setCurrentAccount(accounts[0]);
-        console.log(`The account has changed to: ${accounts[0]}`)
-    });
+    const { ethereum } = window;
+    if (ethereum) {
+        window.ethereum.on('accountsChanged', async () => {
+            const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+            setCurrentAccount(accounts[0]);
+            console.log(`The account has changed to: ${accounts[0]}`)
+        });
+    }
 
     return (
         <UserContext.Provider value={{ currentAccount, adminAddress, connect, checkWallet }}>
