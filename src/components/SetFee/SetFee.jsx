@@ -20,7 +20,6 @@ const SetFee = () => {
                 let contract = new ethers.Contract(contractAddress, factory_abi, signer);
                 // Llamo a la funcion
                 const feeEth = (ethers.utils.parseUnits(newFee, 9)).toString();
-                console.log(feeEth)
                 await contract.setFee(feeEth);
             } else {
                 console.log("No hay conexion a Metamask");

@@ -95,7 +95,6 @@ export const NetworkProvider = ({ children }) => {
         } catch (e) {
             console.error(e)
         }
-        console.log(contractAddress);
     }
     const switchNetwork = async (e) => {
         const network = menuItems.filter(menuItem => menuItem.value === e.target.value);
@@ -143,11 +142,9 @@ export const NetworkProvider = ({ children }) => {
                 setContractAddress(factory_rinkeby_address)
                 break
         }
-        console.log(contractAddress);
     }
     React.useEffect(() => {
         getNetwork();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

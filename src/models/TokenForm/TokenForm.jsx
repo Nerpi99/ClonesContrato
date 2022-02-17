@@ -26,6 +26,7 @@ const TokenForm = () => {
         display: 'none',
     });
     const client = create('https://ipfs.infura.io:5001/api/v0');
+    const [coin, setCoin] = React.useState('');
 
     //Loading spinner
     const [loading, setLoading] = React.useState(false);
@@ -164,7 +165,19 @@ const TokenForm = () => {
     // useEffect
     React.useEffect(() => {
         getFee();
-    }, [])
+        switch (contractAddress) {
+            case "0x2Fac6567ae47Dc5674A96cC19ACb29B6fda050ef":
+                setCoin('ether')
+                break
+            case "0xc0724CD42dD6372FfC4F20C5196f768959E6fa8e":
+                setCoin('matic')
+                break
+            default:
+                setCoin('ether')
+                break
+        }
+        console.log('entra aca--')
+    }, [contractAddress])
     React.useEffect(() => {
         setDecimalSupply(supply + ((10 ** decimals).toString()).slice(1))
     }, [decimals, supply])
@@ -175,11 +188,9 @@ const TokenForm = () => {
             <Box component="div" sx={{ '& .MuiTextField-root': { m: 1, width: '50ch' }, margin: '3rem', marginTop: '7rem', padding: '1rem', borderStyle: 'solid', borderWidth: '1px', borderColor: 'rgba(0, 0, 0, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '22px', boxShadow: 'rgb(0 0 0 / 19%) 0px 10px 20px, rgb(0 0 0 / 23%) 0px 6px 6px', backgroundColor: 'white', maxWidth: '50%', }}>
                 {/* ESTE ES EL FORMULARIO PROPIAMENTE DICHO */}
                 <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '50ch' }, margin: '0', padding: '0', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', maxWidth: '470px' }} onSubmit={(e) => createNewToken(e)}>
-                    {currentAccount !== ""
-                        &&
-                        <div className="tokenform">
-                            <ChainSelector />
-                        </div>}
+                    <div className="tokenform">
+                        <ChainSelector />
+                    </div>
                     <div className="form-inputs">
                         <label htmlFor="name" style={{ display: 'none' }}>Name:</label>
                         <TextField type="text" id="name" label="NAME" name="name" variant="standard" onChange={(e) => setName(e.target.value)} InputProps={{ endAdornment: (<HelpIcon explicacion='Set your new token name' />), startAdornment: (<PersonOutline sx={{ paddingRight: '10px', color: 'rgba(0, 0, 0, 0.4)' }} />) }} required />
@@ -205,7 +216,7 @@ const TokenForm = () => {
 
                     {fileUrl && <img src={fileUrl} width="auto" height="64px" alt="imagen" style={{ margin: '1rem' }} />}
                     <Button variant="contained" type="submit" startIcon={<StarBorder />} sx={{ marginTop: '1rem', width: '80%', borderRadius: '13px' }} onClick={(e) => createNewToken(e)}>CREATE TOKEN</Button>
-                    <Typography variant="overline" sx={{ marginTop: '1rem' }}>*El fee es de {tarifa} ether + gas</Typography>
+                    <Typography variant="overline" sx={{ marginTop: '1rem' }}>*El fee es de {tarifa} {coin} + gas</Typography>
                     {error && <Alert sx={{ marginBottom: '2rem' }} severity="error">Todos los espacios deben ser completados!</Alert>}
                 </Box>
                 <div id="img-form">
