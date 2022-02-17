@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
-import "./MyToken.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/ClonesUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "./TokenERC20.sol";
+
 
 contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
     // VARIABLES
@@ -18,6 +22,7 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
     uint256 public fee;
     uint256 public refund;
     address [] users;
+    address payable collector;
     // EVENTS
     event newToken(
         address indexed _tokenAddress,
@@ -31,6 +36,16 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
     function initialize (address _implementation) initializer public{
         implementation = _implementation;
         fee = 9781055 gwei;
+        __Ownable_init();
+        collector = payable(owner());
+    }
+
+    function getCollector() public view returns (address payable){
+        return collector;
+    }
+
+    function setCollector(address payable _collector) public {
+        collector = _collector;
     }
 
     function changeImplementation(address _newContract) public onlyOwner {
@@ -47,7 +62,7 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
         require(msg.value >= fee, "El valor deberia ser mayor a la tarifa");
         // Clona
         address clone = ClonesUpgradeable.clone(implementation);
-        MyToken(clone).initialize(
+        TokenERC20(clone).initialize(
             _name,
             _symbol,
             msg.sender,
@@ -70,7 +85,7 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
             payable(msg.sender).transfer(refund);
         }
         if (address(this).balance > 0) {
-            payable(owner()).transfer(address(this).balance);
+            collector.transfer(address(this).balance);
         }
     }
 
@@ -81,9 +96,12 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
     function getClones(address _address) public view returns (Token [] memory){
         return clones[_address];
     }
-
+    
     function _authorizeUpgrade(address newImplementation)
         internal
         override
+        onlyOwner
     {}
+
+   
 }

@@ -1,35 +1,90 @@
-// Load dependencies
-const { deployProxy, upgradeProxy } = require('@openzeppelin/truffle-upgrades');
+const { deployProxy } = require('@openzeppelin/truffle-upgrades');
+const truffleAssert = require('truffle-assertions');
 
-// Load compiled artifacts
-const token_ = artifacts.require('MyToken');
-const factory_ = artifacts.require('Factory')
-//const factoryv2_ = artifacts.require('FactoryV2')
 
-// Start test block
-contract('test', async accounts => {
+const Factory = artifacts.require("Factory");
+const TokenERC20 = artifacts.require("TokenERC20");
 
+contract("Factory", accounts => {
     before(async () => {
-        //tokenProxy = await deployProxy(token_, {initializer: false});
-        token = await token_.new()
-        factory = await deployProxy(factory_, [token.address]);
-
-        console.log("token:", token.address)
-        //console.log("tokenProxy:", tokenProxy.address)
-        console.log("factory:", factory.address)
+        tokenerc20 = await TokenERC20.deployed();
+        factory = await deployProxy(Factory, [tokenerc20.address],{kind: 'uups'});
     });
-    
-    it('clone', async function() {
-        console.log(await factory.getClones(accounts[0]))
 
-        await factory.clonar("1", "1", 1000, 18, { from: accounts[1], value: (web3.utils.toWei("9781055", "Gwei")) })
-        await factory.clonar("2", "2", 100, 18,  { from: accounts[0], value: (web3.utils.toWei("9781055", "Gwei")) })
+    it("Check implementation address: ", async () => {
+        console.log(await tokenerc20.address);
+    });
 
-        console.log(await factory.getClones(accounts[0]))
-        const cloneAddress = (await factory.getClones(accounts[0]))[0].tokenAddress
+    it("Check implementation used and fee: ", async () => {
+        console.log(await factory.implementation());
+        console.log((await factory.fee()).toString());
+    });
 
-        console.log("nueva instancia: ", await new token_(cloneAddress).address)
-        console.log(await new token_(cloneAddress).name())
+    it("Check factory owner: ", async () => {
+        console.log("Account 0 address: ", accounts[0]);
+        console.log(await factory.owner());
+    });
 
-    })
-})
+    it("Change Collector address: ", async () => {
+        await factory.setCollector(accounts[3]);
+    });
+
+    it("Make a clone: ", async () => {
+        await factory.clonar("Belgrano", "CAB", 100000, 18, {value: 19781055000000000});
+    });
+
+    it("Check for created clones: ", async () => {
+        arrayTokens = await factory.getClones(accounts[0]);
+        console.log(arrayTokens.toString());
+    });
+
+    it("Clone info: ", async () => {
+        instanciaClon = await new TokenERC20(arrayTokens[0].tokenAddress);
+        console.log(await instanciaClon.name());
+        console.log(arrayTokens.length);
+    });
+
+    it("Balance of collector address: ", async () => {
+        console.log(await web3.eth.getBalance(accounts[0]));
+    });
+
+    it("token balance of owner: ", async () => {
+        console.log(await instanciaClon.balanceOf(accounts[0]));
+    });
+
+    it("Transfer tokens and check balance of receiver: ", async () => {
+        await instanciaClon.transfer(accounts[1], 5000);
+        console.log((await instanciaClon.balanceOf(accounts[1])).toString());
+    });
+
+    it("Burn tokens and check balance: ", async () => {
+        await instanciaClon.burn(2500,{from: accounts[1]});
+        console.log((await instanciaClon.balanceOf(accounts[1])).toString());
+    });
+
+    it("Burn wihtout having: ", async () => {
+        await truffleAssert.reverts(instanciaClon.burn(2500,{from: accounts[2]}),"ERC20: burn amount exceeds balance");
+    });
+
+    it("Mint tokens and check supply: ", async () => {
+        await instanciaClon.mint(accounts[2], 1000000,{from: accounts[0]});
+        console.log((await instanciaClon.totalSupply()).toString());
+    });
+
+    it("Set a new fee: ", async () => {
+        await factory.setFee("978105500000000000");
+    });
+
+    it("Try to clone without fee: ", async () => {
+        await truffleAssert.reverts(factory.clonar("argentina", "arg", 1000000, 18, {value:"97810500000000000", from: accounts[1]}),"El valor deberia ser mayor a la tarifa");
+    });
+
+    it("Make a clone: ", async () => {
+        await truffleAssert.reverts(factory.clonar("Belgrano", "CAB", 1000000, 18, {value: 19781055000000000}),"El valor deberia ser mayor a la tarifa");
+    });
+
+    it("Pause and try to mint: ", async () => {
+        await instanciaClon.pause();
+        await instanciaClon.mint(accounts[2], 1000000,{from: accounts[0]});
+    });
+});
