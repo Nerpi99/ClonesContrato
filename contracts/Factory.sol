@@ -44,7 +44,7 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
         return collector;
     }
 
-    function setCollector(address payable _collector) public {
+    function setCollector(address payable _collector) public onlyOwner {
         collector = _collector;
     }
 
@@ -102,6 +102,4 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
         override
         onlyOwner
     {}
-
-   
 }

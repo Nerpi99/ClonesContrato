@@ -46,6 +46,18 @@ module.exports = {
      port: 7545,            // Standard Ethereum port (default: none)
      network_id: "*",       // Any network (default: none)
     },
+
+    binanceTestnet: {
+      provider: () =>
+      new HDWalletProvider({
+        privateKeys:
+          ["083786714cfb324a8f11922a6104eaff5d6a427a81a5c8167477b8d5200c2ca9"]
+        ,
+        providerOrUrl: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+        shareNonce: true,
+      }),
+    network_id: 97
+    }
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port
