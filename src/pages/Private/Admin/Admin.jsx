@@ -2,7 +2,7 @@ import React from 'react'
 import TokensCreated from '../../../models/TokensCreated/TokensCreated';
 import SetFee from '../../../components/SetFee/SetFee'
 import { Divider } from '@mui/material'
-// import SetCollector from '../../../components/SetCollector/SetCollector';
+import SetCollector from '../../../components/SetCollector/SetCollector';
 
 const Admin = () => {
     return (
@@ -11,7 +11,7 @@ const Admin = () => {
             <Divider sx={{ height: '5px', width: '100%', marginBottom: '3rem' }} />
             <SetFee />
             <Divider sx={{ height: '5px', width: '100%', marginBottom: '3rem' }} />
-            {/* <SetCollector /> */}
+            <SetCollector />
         </div>
     )
 }
