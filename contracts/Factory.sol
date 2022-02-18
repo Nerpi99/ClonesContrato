@@ -53,7 +53,7 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
         return collector;
     }
 
-    function getClones(address _address) public view returns (Tokens[] memory){
+    function getClones(address _address) public view returns (Token[] memory){
         return clones[_address];
     }
 
