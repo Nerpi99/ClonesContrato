@@ -5,7 +5,6 @@ import TokensTable from "../../components/TokensTable/TokensTable";
 import { factory_abi } from "../../contract/contract";
 import { Skeleton } from '@mui/material';
 import { useNetwork } from '../../context/NetworkContext';
-
 const TokensCreated = () => {
     // Variables
     const [loading, setLoading] = React.useState(true);
@@ -31,7 +30,6 @@ const TokensCreated = () => {
             console.error(err);
         }
     }
-
     // UseEffect
     React.useEffect(() => {
         getAllTokens();
@@ -39,7 +37,6 @@ const TokensCreated = () => {
             setLoading(false);
         }, [200]);
     }, [])
-
     // Component
     if (loading) {
         return <div id="loading">
@@ -55,5 +52,4 @@ const TokensCreated = () => {
         )
     }
 }
-
 export default TokensCreated
