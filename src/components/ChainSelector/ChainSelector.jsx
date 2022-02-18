@@ -34,13 +34,13 @@ const menuItems = [
     //     currencySymbol: "AVAX",
     //     icon: <AvaxLogo />,
     // },
-    // {
-    //     key: "0x4",
-    //     value: "Rinkeby Testnet",
-    //     rpcurl: "https://rinkey.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
-    //     currencySymbol: "ETH",
-    //     icon: <ETHLogo />,
-    // },
+    {
+        key: "0x4",
+        value: "Rinkeby Testnet",
+        rpcurl: "https://rinkey.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
+        currencySymbol: "ETH",
+        icon: <ETHLogo />,
+    },
     {
         key: "0x61",
         value: "Smart Chain Testnet",

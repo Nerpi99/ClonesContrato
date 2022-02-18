@@ -3,54 +3,54 @@ import { ethers } from 'ethers';
 import { factory_rinkeby_address, factory_mumbai_address, factory_bsc_address, factory_bscT_address } from '../contract/contract'
 
 const menuItems = [
-    {
-        key: "0x1",
-        value: "Ethereum Mainnet",
-        rpcurl: "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
-        currencySymbol: "ETH",
-    },
+    // {
+    //     key: "0x1",
+    //     value: "Ethereum Mainnet",
+    //     rpcurl: "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
+    //     currencySymbol: "ETH",
+    // },
     {
         key: "0x4",
         value: "Rinkeby Testnet",
         rpcurl: "https://rinkey.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
         currencySymbol: "ETH",
     },
-    {
-        key: "0x38",
-        value: "Binance Smart Chain",
-        rpcurl: "https://bsc-dataseed.binance.org/",
-        currencySymbol: "BNB",
-    },
+    // {
+    //     key: "0x38",
+    //     value: "Binance Smart Chain",
+    //     rpcurl: "https://bsc-dataseed.binance.org/",
+    //     currencySymbol: "BNB",
+    // },
     {
         key: "0x61",
         value: "Smart Chain Testnet",
         rpcurl: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
         currencySymbol: "BNB",
     },
-    {
-        key: "0x89",
-        value: "Polygon Mainnet",
-        rpcurl: "https://polygon-rpc.com",
-        currencySymbol: "MATIC",
-    },
+    // {
+    //     key: "0x89",
+    //     value: "Polygon Mainnet",
+    //     rpcurl: "https://polygon-rpc.com",
+    //     currencySymbol: "MATIC",
+    // },
     {
         key: "0x13881",
         value: "Polygon Mumbai Testnet",
         rpcurl: "https://rpc-mumbai.maticvigil.com",
         currencySymbol: "MATIC",
     },
-    {
-        key: "0xa86a",
-        value: "Avalanche Mainnet",
-        rpcurl: "https://api.avax.network/ext/bc/C/rpc",
-        currencySymbol: "AVAX",
-    },
-    {
-        key: "0xa869",
-        value: "Avalanche Fuji Testnet",
-        rpcurl: "https://api.avax-test.network/ext/bc/C/rpc",
-        currencySymbol: "AVAX",
-    },
+    // {
+    //     key: "0xa86a",
+    //     value: "Avalanche Mainnet",
+    //     rpcurl: "https://api.avax.network/ext/bc/C/rpc",
+    //     currencySymbol: "AVAX",
+    // },
+    // {
+    //     key: "0xa869",
+    //     value: "Avalanche Fuji Testnet",
+    //     rpcurl: "https://api.avax-test.network/ext/bc/C/rpc",
+    //     currencySymbol: "AVAX",
+    // },
 ];
 
 const NetworkContext = React.createContext([]);
@@ -160,6 +160,7 @@ export const NetworkProvider = ({ children }) => {
                 setContractAddress(factory_rinkeby_address)
                 break
         }
+        await getNetwork();
     }
     React.useEffect(() => {
         getNetwork();

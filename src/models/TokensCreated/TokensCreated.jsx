@@ -12,7 +12,7 @@ const TokensCreated = () => {
     const [tokensCreated, setTokensCreated] = React.useState([]);
 
     // NetworkContext
-    const { contractAddress, currentNetwork } = useNetwork();
+    const { contractAddress } = useNetwork();
 
     // functions
     const getAllTokens = async () => {
@@ -23,27 +23,9 @@ const TokensCreated = () => {
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
                 let contract = new ethers.Contract(contractAddress, factory_abi, signer);
-                // Dependiendo de cada red elijo cuantos bloques para atras va
-                let blocks;
-                switch (currentNetwork) {
-                    case 'Rinkeby Testnet':
-                        blocks = -150000000
-                        break
-                    case 'Polygon Mumbai Testnet':
-                        blocks = -990
-                        break
-                    case 'Binance Smart Chain':
-                        blocks = -4900
-                        break
-                    default:
-                        blocks = -990
-                        break
-                }
-                // Busco en todos los eventos
-                let filterTo = contract.filters.newToken();
-                contract.queryFilter(filterTo, blocks)
-                    .then((event) => setTokensCreated(event.reverse()))
-                    .catch((error) => console.error(`Flasho`, error))
+                await contract.getAllClones()
+                    .then((e) => setTokensCreated(e))
+                    .catch((error) => console.error(error))
             }
         } catch (err) {
             console.error(err);

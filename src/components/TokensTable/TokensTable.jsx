@@ -82,16 +82,16 @@ const TokensTable = ({ tokens }) => {
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                             <TableCell component="th" scope="row">
-                                {token.args._name}
+                                {token.tokenName}
                             </TableCell>
-                            <TableCell align="right">{token.args._symbol}</TableCell>
-                            <TableCell align="right"><a className="link-table" href={`${link}${token.args._tokenAddress}`} target="_blank" rel="noreferrer">{token.args._tokenAddress.slice(0, 5)}...{token.args._tokenAddress.slice(37)}</a><Tooltip title="Copy address" arrow><IconButton onClick={() => navigator.clipboard.writeText(token.args._tokenAddress)}><ContentCopyIcon /></IconButton></Tooltip></TableCell>
-                            <TableCell align="right">{token.args._owner.slice(0, 5)}...{token.args._owner.slice(37)}<Tooltip title="Copy address" arrow><IconButton onClick={() => navigator.clipboard.writeText(token.args._owner)}><ContentCopyIcon /></IconButton></Tooltip></TableCell>
-                            <TableCell align="right">{ethers.utils.formatUnits(token.args._initialSupply, token.args._decimals)}</TableCell>
+                            <TableCell align="right">{token.tokenSymbol}</TableCell>
+                            <TableCell align="right"><a className="link-table" href={`${link}${token.tokenAddress}`} target="_blank" rel="noreferrer">{token.tokenAddress.slice(0, 5)}...{token.tokenAddress.slice(37)}</a><Tooltip title="Copy address" arrow><IconButton onClick={() => navigator.clipboard.writeText(token.tokenAddress)}><ContentCopyIcon /></IconButton></Tooltip></TableCell>
+                            <TableCell align="right">{token.owner.slice(0, 5)}...{token.owner.slice(37)}<Tooltip title="Copy address" arrow><IconButton onClick={() => navigator.clipboard.writeText(token.owner)}><ContentCopyIcon /></IconButton></Tooltip></TableCell>
+                            <TableCell align="right">{ethers.utils.formatUnits(token.initialSupply, 18)}</TableCell>
                             {/* ACA VA A IR EL LINK AL DASHBOARD DE TOKENS */}
-                            {/* <TableCell><Link to={`/token/${token.args._tokenAddress}`}><IconButton><AssistantIcon /></IconButton></Link></TableCell> */}
-                            <TableCell align="center"><Button variant="contained" type="submit" sx={{ fontSize: '0.75rem' }} onClick={() => addToMetamask(token.args._tokenAddress, token.args._symbol, token.args._decimals)}>Add to Metamask</Button></TableCell>
-                            <TableCell align="center"><a href={`${link}${token.args._tokenAddress}`} target="_blank" rel="noreferrer"><Button variant="contained" sx={{ fontSize: '0.75rem' }} endIcon={<OpenInNewIcon />}>Open in etherscan</Button></a></TableCell>
+                            {/* <TableCell><Link to={`/token/${token.tokenAddress}`}><IconButton><AssistantIcon /></IconButton></Link></TableCell> */}
+                            <TableCell align="center"><Button variant="contained" type="submit" sx={{ fontSize: '0.75rem' }} onClick={() => addToMetamask(token.tokenAddress, token.tokenSymbol, 18)}>Add to Metamask</Button></TableCell>
+                            <TableCell align="center"><a href={`${link}${token.tokenAddress}`} target="_blank" rel="noreferrer"><Button variant="contained" sx={{ fontSize: '0.75rem' }} endIcon={<OpenInNewIcon />}>Open in etherscan</Button></a></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

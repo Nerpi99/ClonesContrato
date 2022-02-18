@@ -25,27 +25,10 @@ const MyTokens = () => {
                 let contract = new ethers.Contract(contractAddress, factory_abi, signer);
                 // Obtengo el address del cliente
                 const myAddress = await signer.getAddress();
-                // Dependiendo el contrato es la cantidad de bloques pa atras que busca
-                let blocks;
-                switch (currentNetwork) {
-                    case 'Rinkeby Testnet':
-                        blocks = -150000000
-                        break
-                    case 'Polygon Mumbai Testnet':
-                        blocks = -990
-                        break
-                    case 'Binance Smart Chain':
-                        blocks = -4900
-                        break
-                    default:
-                        blocks = -990
-                        break
-                }
-                // Busco en los eventos newToken solo los tokens que deployo myAddress
-                let filterTo = contract.filters.newToken(null, null, null, myAddress, null, null);
-                contract.queryFilter(filterTo, blocks)
-                    .then((event) => setMyTokens(event.reverse()))
-                    .catch((error) => console.error(`Flasheo:`, error));
+                // Obtiene los Tokens de myAddress
+                await contract.getClones(myAddress)
+                    .then((e) => setMyTokens(e))
+                    .catch((error) => console.error(error))
             }
         } catch (error) {
             console.error(error);
