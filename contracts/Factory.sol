@@ -93,7 +93,7 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
         emit newToken(clone, _symbol, _name, msg.sender, _supply, _decimals);
         // Agrega el nuevo token
         clones[msg.sender].push(
-            Token(clone, _name, _symbol, msg.sender, _supply, block.timestamp)
+            Token(clone, _name, _symbol, msg.sender, _supply, block.timestamp, _decimals)
         );
         // Agrega un nuevo usuario
         if (clones[msg.sender].length == 0){
