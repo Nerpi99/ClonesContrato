@@ -41,11 +41,11 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
     }
 
     //GETTERS
-    function getUsers() onlyOwner returns (address[] memory){
+    function getUsers() public view onlyOwner returns (address[] memory){
         return users;
     }
 
-    function getImplementacion() onlyOwner returns (address){
+    function getImplementacion() public view onlyOwner returns (address){
         return implementacion;
     }
 
