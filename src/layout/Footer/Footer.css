@@ -1,12 +1,12 @@
 .footer{
-    margin-top: auto;
+    /* margin-top: auto; */
     bottom: 0;
     width: 100%;
     background-color: #663DBD;
     text-align: center;
     align-items : center;
     padding : 1rem 0;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .footer #layout-header-logo {
@@ -73,12 +73,16 @@
     background-color: rgba(255, 255, 255, 0.795);
 }
 
+.css-84tznd-MuiSvgIcon-root{
+    padding: 0 !important;
+    margin: 0 10px;
+}
 
 @media screen and (min-width : 850px){
 
-    .footer{
+    /* .footer{
         height: 8rem;
-    }
+    } */
 
 
     .grid-container{

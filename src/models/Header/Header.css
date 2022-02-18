@@ -1,8 +1,12 @@
-#banner {
-    min-width: 100vw;
-    min-height: 100vh;
-    background: no-repeat center right url('../../assets/FondoHome.svg');
+.home-page{
+    min-width: 100%;
 }
+
+.home-page .container,.home-page .row {
+    height: 100%;
+    align-items: center;
+}
+
 .banner-container {
     margin: 0 5%;
     margin-top: 15rem;
@@ -11,20 +15,32 @@
     max-width: 30%;
     text-align: left;
 }
+
+.container-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.network-logos {
+    margin: 0 1rem;
+}
+
+.row div {
+    text-align: start;
+}
+
+.row button {
+    background: rgb(187,109,243);
+    background: linear-gradient(90deg, rgba(187,109,243,1) 0%, rgba(82,119,247,1) 32%, rgba(0,199,197,1) 67%, rgba(180,247,89,1) 100%);
+}
+
 @media (min-width: 600px) {
     .banner-container {
         padding-left: 30px;
         padding-right: 30px;
     }
 }
-.container-logos {
-    display: flex;
-    align-items: center;
-}
-.network-logos {
-    margin-right: 2rem;
-}
 
-.network-logos-eth {
-    margin-right: 0.5rem;
-}
+/* .network-logos-eth {
+    margin-right: 0 0.5rem;
+} */

@@ -1,8 +1,8 @@
 div.form-inputs {
-    display: flex;
+    
     justify-content: space-between;
     align-items: baseline;
-    padding: .5rem;
+    padding: .5rem; 
 }
 #img-form {
     margin: 1rem;

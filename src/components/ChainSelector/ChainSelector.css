@@ -2,12 +2,14 @@
   padding: 7px 14px !important;
   padding-right: 32px !important;
   min-width: 150px !important;
+  background: white !important;
+  color: #5201b5 !important;
 }
 .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
   border-color: transparent !important;
 }
 svg.MuiSelect-icon {
-  color: white;
+  color: #5201b5 ;
 }
 div.tokenform {
   width: 95% !important;

@@ -11,7 +11,6 @@ const TokensCreated = () => {
     const [tokensCreated, setTokensCreated] = React.useState([]);
 
     // NetworkContext
-    const { contractAddress } = useNetwork();
     const { contractAddress, currentNetwork } = useNetwork();
 
     // functions
@@ -41,7 +40,6 @@ const TokensCreated = () => {
                 }
                 // Busco en todos los eventos
                 let filterTo = contract.filters.newToken();
-                contract.queryFilter(filterTo)
                 contract.queryFilter(filterTo, blocks)
                     .then((event) => setTokensCreated(event.reverse()))
                     .catch((error) => console.error(`Flasho`, error))

@@ -10,6 +10,10 @@
   display: none;
 }
 
+h1, h2 {
+  font-family: 'Roboto Condensed', sans-serif !important ;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -22,7 +26,7 @@ a {
 /* PAGES */
 /* LOADING */
 div#loading {
-  background: no-repeat center right url('./assets/FondoHome02.svg');
+  /* background: no-repeat center right url('./assets/FondoHome02.svg'); */
   margin: auto;
   display: flex;
   align-items: center;
@@ -39,5 +43,10 @@ div#create-token, div#user-tokens {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  /* background: no-repeat center right url('./assets/FondoHome02.svg'); */
+}
+
+.fondo-falopa {
   background: no-repeat center right url('./assets/FondoHome02.svg');
+  min-height: 79vh;
 }
