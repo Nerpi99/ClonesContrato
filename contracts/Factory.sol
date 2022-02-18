@@ -46,7 +46,7 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
     }
 
     function getImplementacion() public view onlyOwner returns (address){
-        return implementacion;
+        return implementation;
     }
 
     function getCollector() public view onlyOwner returns (address payable){
