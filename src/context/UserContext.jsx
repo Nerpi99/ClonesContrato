@@ -6,7 +6,7 @@ UserContext.displayName = "UserContext";
 export const UserProvider = ({ children }) => {
     // Variables
     const [currentAccount, setCurrentAccount] = React.useState("");
-    const adminAddress = "0x5c6a20eBa299B1D7D09757FD91F1384Fe9c5fA90";
+    const adminAddress = "0x8d96037b23f011f95b4dd288240b6beb6316f2c3";
     // Funciones
     const checkWallet = async () => {
         try {

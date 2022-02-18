@@ -6,9 +6,13 @@ import { Button, Toolbar, Skeleton } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import ChainSelector from '../../components/ChainSelector/ChainSelector';
 import backLogo from "../../assets/logodaaps.svg";
+import {useLocation} from 'react-router-dom';
 
 
 const Navbar = () => {
+
+    let myTokens = useLocation().pathname;
+
     // Variables
     const [loading, setLoading] = React.useState(true)
     const { currentAccount, adminAddress, connect, checkWallet } = useUser();
@@ -36,7 +40,7 @@ const Navbar = () => {
                         : currentAccount === ""
                             ? <Button color="info" onClick={connectWallet}>CONNECT WALLET</Button>
                             : <>
-                                <Link to="/my-tokens"><Button variant="outlined" color="info"  sx={{ height: '39px', marginRight: '1rem' }}>Go to my Tokens</Button></Link>
+                                {myTokens == "/my-tokens" ? null : <Link to="/my-tokens"><Button variant="outlined" color="info"  sx={{ height: '39px', marginRight: '1rem' }}>Go to my Tokens</Button></Link>}
                                 {currentAccount.toLowerCase() === adminAddress.toLowerCase() && <Link to="/admin"><Button variant="outlined" color="info"  sx={{ height: '39px', marginRight: '1rem' }}>Go to Admin</Button></Link>}
                                 <Button variant="outlined" color="info" startIcon={<AccountCircle />} sx={{ height: '39px', marginRight: '1rem' }}>
                                     {currentAccount.slice(0, 5)}...{currentAccount.slice(37)}
