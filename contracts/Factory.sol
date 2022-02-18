@@ -16,6 +16,7 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
         address owner;
         uint256 initialSupply;
         uint256 timeCreated;
+        uint8 decimals;
     }
     address private implementation;
     mapping(address => Token[]) public clones;
@@ -87,7 +88,7 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
             _supply,
             _decimals
         );
-        allClones.push(Token(clone, _name, _symbol, msg.sender, _supply, block.timestamp));
+        allClones.push(Token(clone, _name, _symbol, msg.sender, _supply, block.timestamp, _decimals));
         // Emite el evento
         emit newToken(clone, _symbol, _name, msg.sender, _supply, _decimals);
         // Agrega el nuevo token
