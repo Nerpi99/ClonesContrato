@@ -17,11 +17,11 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
         uint256 initialSupply;
         uint256 timeCreated;
     }
-    address public implementation;
+    address private implementation;
     mapping(address => Token[]) public clones;
     uint256 public fee;
-    uint256 public refund;
-    address [] users;
+    uint256 private refund;
+    address[] private users;
     address payable collector;
     // EVENTS
     event newToken(
@@ -40,8 +40,21 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
         collector = payable(owner());
     }
 
-    function getCollector() public view returns (address payable){
+    //GETTERS
+    function getUsers() onlyOwner returns (address[] memory){
+        return users;
+    }
+
+    function getImplementacion() onlyOwner returns (address){
+        return implementacion;
+    }
+
+    function getCollector() public view onlyOwner returns (address payable){
         return collector;
+    }
+
+    function getClones(address _address) public view returns (Tokens[] memory){
+        return clones[_address];
     }
 
     function setCollector(address payable _collector) public onlyOwner {
@@ -93,10 +106,6 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
         fee = _newFee * (1 gwei);
     }
 
-    function getClones(address _address) public view returns (Token [] memory){
-        return clones[_address];
-    }
-    
     function _authorizeUpgrade(address newImplementation)
         internal
         override
