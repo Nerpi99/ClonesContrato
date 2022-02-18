@@ -37,14 +37,14 @@ const TokenForm = () => {
     const [error, setError] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
     const [tarifa, setTarifa] = React.useState("0.009781055");
-    const link = "https://rinkeby.etherscan.io/address/";
+    const [link, setLink] = React.useState('')
 
     // UserContext
     const { connect, currentAccount } = useUser();
     const connectWallet = async () => { connect() }
 
     // NetworkContext
-    const { contractAddress } = useNetwork();
+    const { contractAddress, currentNetwork } = useNetwork();
 
     // FUNCTIONS
     const createNewToken = async (e) => {
@@ -165,21 +165,29 @@ const TokenForm = () => {
     // useEffect
     React.useEffect(() => {
         getFee();
-        switch (contractAddress) {
-            case "0x2Fac6567ae47Dc5674A96cC19ACb29B6fda050ef":
+        switch (currentNetwork) {
+            case 'Rinkeby Testnet':
+                setLink('https://rinkeby.etherscan.io/token/')
                 setCoin('ether')
                 break
-            case "0xc0724CD42dD6372FfC4F20C5196f768959E6fa8e":
+            case 'Polygon Mumbai Testnet':
+                setLink('https://mumbai.polygonscan.com/token/')
                 setCoin('matic')
                 break
-            case "0xb9a1aca94cdDB22c5C667f962b1e7E605482266e":
-                setCoin('bsc')
-                break                
+            case 'Binance Smart Chain':
+                setLink('https://www.bscscan.com/token/')
+                setCoin('bnb')
+                break
+            case 'Smart Chain Testnet':
+                setLink('https://testnet.bscscan.com/token/')
+                setCoin('bnb')
+                break
             default:
-                setCoin('bsc')
+                setLink('https://rinkeby.etherscan.io/token/')
+                setCoin('ether')
                 break
         }
-    }, [contractAddress])
+    }, [currentNetwork, contractAddress])
     React.useEffect(() => {
         setDecimalSupply(supply + ((10 ** decimals).toString()).slice(1))
     }, [decimals, supply])

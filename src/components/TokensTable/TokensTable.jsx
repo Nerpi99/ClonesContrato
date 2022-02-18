@@ -1,13 +1,15 @@
 import * as React from 'react';
 // import { Link } from 'react-router-dom';
 import { ethers } from 'ethers';
+import { useNetwork } from '../../context/NetworkContext';
 import { Button, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 // import AssistantIcon from '@mui/icons-material/Assistant';
 
 const TokensTable = ({ tokens }) => {
-    const link = "https://rinkeby.etherscan.io/token/";
+    const { currentNetwork } = useNetwork();
+    const [link, setLink] = React.useState('')
     const addToMetamask = async (addr, sym, dec) => {
         console.log(`Comienza la funcion Add to Metamask --`)
         try {
@@ -39,9 +41,27 @@ const TokensTable = ({ tokens }) => {
             console.log(error);
         }
     }
-
+    React.useEffect(() => {
+        switch (currentNetwork) {
+            case 'Rinkeby Testnet':
+                setLink('https://rinkeby.etherscan.io/token/')
+                break
+            case 'Polygon Mumbai Testnet':
+                setLink('https://mumbai.polygonscan.com/token/')
+                break
+            case 'Binance Smart Chain':
+                setLink('https://www.bscscan.com/token/')
+                break
+            case 'Smart Chain Testnet':
+                setLink('https://testnet.bscscan.com/token/')
+                break
+            default:
+                setLink('https://rinkeby.etherscan.io/token/')
+                break
+        }
+    }, [currentNetwork])
     return (
-        <TableContainer component={Paper} sx={{ display: 'flex', justifyContent: 'center', borderStyle: 'solid', borderWidth: '1px', borderColor: 'rgba(0, 0, 0, 0.2)', boxShadow: 'rgb(0 0 0 / 19%) 0px 10px 20px, rgb(0 0 0 / 23%) 0px 6px 6px', maxWidth: '75%', borderRadius: '22px', marginTop: '13rem', marginBottom: '5rem'}}>
+        <TableContainer component={Paper} sx={{ display: 'flex', justifyContent: 'center', borderStyle: 'solid', borderWidth: '1px', borderColor: 'rgba(0, 0, 0, 0.2)', boxShadow: 'rgb(0 0 0 / 19%) 0px 10px 20px, rgb(0 0 0 / 23%) 0px 6px 6px', maxWidth: '75%', borderRadius: '22px', marginTop: '13rem', marginBottom: '5rem' }}>
             <Table sx={{ minWidth: 650, margin: 1 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>

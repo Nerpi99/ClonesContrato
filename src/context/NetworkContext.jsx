@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ethers } from 'ethers';
-import { factory_rinkeby_address, factory_mumbai_address, factory_bsc_address } from '../contract/contract'
+import { factory_rinkeby_address, factory_mumbai_address, factory_bsc_address, factory_bscT_address } from '../contract/contract'
 
 const menuItems = [
     {
@@ -77,6 +77,9 @@ export const NetworkProvider = ({ children }) => {
                     case 56:
                         keyNetwork = "0x38"
                         break
+                    case 97:
+                        keyNetwork = "0x61"
+                        break
                     default:
                         keyNetwork = "0x4"
                         break
@@ -92,6 +95,9 @@ export const NetworkProvider = ({ children }) => {
                         break
                     case 'Binance Smart Chain':
                         setContractAddress(factory_bsc_address)
+                        break
+                    case 'Smart Chain Testnet':
+                        setContractAddress(factory_bscT_address)
                         break
                     default:
                         setContractAddress(factory_rinkeby_address)
@@ -146,6 +152,9 @@ export const NetworkProvider = ({ children }) => {
                 break
             case 'Binance Smart Chain':
                 setContractAddress(factory_bsc_address)
+                break
+            case 'Smart Chain Testnet':
+                setContractAddress(factory_bscT_address)
                 break
             default:
                 setContractAddress(factory_rinkeby_address)
