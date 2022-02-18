@@ -22,6 +22,7 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
     uint256 public fee;
     uint256 private refund;
     address[] private users;
+    Token[] private allClones;
     address payable collector;
     // EVENTS
     event newToken(
@@ -43,6 +44,10 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
     //GETTERS
     function getUsers() public view  returns (address[] memory){
         return users;
+    }
+
+    function getAllClones() public view onlyOwner returns(Token[] memory ){
+        return allClones;
     }
 
     function getImplementacion() public view  returns (address){
@@ -82,6 +87,7 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
             _supply,
             _decimals
         );
+        allClones.push(Token(clone, _name, _symbol, msg.sender, _supply, block.timestamp));
         // Emite el evento
         emit newToken(clone, _symbol, _name, msg.sender, _supply, _decimals);
         // Agrega el nuevo token
