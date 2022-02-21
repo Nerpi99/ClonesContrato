@@ -25,18 +25,18 @@ contract MyToken is
         uint256 _initialSupply,
         uint8 _decimals
     ) public initializer {
-        // Inicio el ERC 20
+        // Iniit ERC 20
         __ERC20_init(_name, _symbol);
         __ERC20Burnable_init();
         __Pausable_init();
         __AccessControl_init();
-        // Creo el supply inicial
+        // Set initial supply 
         _mint(_owner, _initialSupply);
-        // Creo los roles
+        // Creating the roles
         _grantRole(DEFAULT_ADMIN_ROLE, _owner);
         _grantRole(MINTER_ROLE, _owner);
         _grantRole(PAUSER_ROLE, _owner);
-        // Seteo los decimales
+        // Set the decimals 
         newDecimals = _decimals;
     }
 
