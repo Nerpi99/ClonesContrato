@@ -16,12 +16,14 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
         address owner;
         uint256 initialSupply;
         uint256 timeCreated;
+        uint8 decimals;
     }
     address private implementation;
     mapping(address => Token[]) public clones;
     uint256 public fee;
     uint256 private refund;
     address[] private users;
+    Token[] private allClones;
     address payable collector;
     // EVENTS
     event newToken(
@@ -41,15 +43,19 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
     }
 
     //GETTERS
-    function getUsers() public view onlyOwner returns (address[] memory){
+    function getUsers() public view  returns (address[] memory){
         return users;
     }
 
-    function getImplementacion() public view onlyOwner returns (address){
+    function getAllClones() public view onlyOwner returns(Token[] memory ){
+        return allClones;
+    }
+
+    function getImplementacion() public view  returns (address){
         return implementation;
     }
 
-    function getCollector() public view onlyOwner returns (address payable){
+    function getCollector() public view  returns (address payable){
         return collector;
     }
 
@@ -88,7 +94,7 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
         emit newToken(clone, _symbol, _name, msg.sender, _supply, _decimals);
         // Add the new token to clones array 
         clones[msg.sender].push(
-            Token(clone, _name, _symbol, msg.sender, _supply, block.timestamp)
+            Token(clone, _name, _symbol, msg.sender, _supply, block.timestamp, _decimals)
         );
         // Add a new user 
         if (clones[msg.sender].length == 0){
