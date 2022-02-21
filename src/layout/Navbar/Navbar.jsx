@@ -9,6 +9,7 @@ import { AccountCircle } from "@mui/icons-material";
 import ChainSelector from '../../components/ChainSelector/ChainSelector';
 import backLogo from "../../assets/logodaaps.svg";
 import {useLocation} from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
 
 
 const Navbar = () => {

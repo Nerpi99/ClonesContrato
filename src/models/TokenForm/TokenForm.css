@@ -7,3 +7,13 @@ div.form-inputs {
 #img-form {
     margin: 1rem;
 }
+
+.btn-create-token{
+    background: rgb(179,110,245);
+    background: linear-gradient(90deg, rgba(179,110,245,1) 0%, rgba(84,119,247,1) 33%, rgba(11,188,204,1) 66%, rgba(170,246,93,1) 100%);    
+    
+}
+
+.container-token{
+    margin-top: 4rem;
+}
