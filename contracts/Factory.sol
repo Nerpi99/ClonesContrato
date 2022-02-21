@@ -71,15 +71,17 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
         implementation = _newContract;
     }
 
+
+    //function to clone an ERC20 token
     function clonar(
         string memory _name,
         string memory _symbol,
         uint256 _supply,
         uint8 _decimals
     ) external payable {
-        // Requiero que mande la guita correspondiente
+        // the value shouldn't bee minor than fee
         require(msg.value >= fee, "El valor deberia ser mayor a la tarifa");
-        // Clona
+        // Clone
         address clone = ClonesUpgradeable.clone(implementation);
         TokenERC20(clone).initialize(
             _name,
@@ -89,17 +91,17 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
             _decimals
         );
         allClones.push(Token(clone, _name, _symbol, msg.sender, _supply, block.timestamp, _decimals));
-        // Emite el evento
+        // Emit the event 
         emit newToken(clone, _symbol, _name, msg.sender, _supply, _decimals);
-        // Agrega el nuevo token
+        // Add the new token to clones array 
         clones[msg.sender].push(
             Token(clone, _name, _symbol, msg.sender, _supply, block.timestamp, _decimals)
         );
-        // Agrega un nuevo usuario
+        // Add a new user 
         if (clones[msg.sender].length == 0){
             users.push(msg.sender);
         }
-        // Si llega a mandar guita de mas se le devuelve
+        // if the value is higher than fee, the contract refund the difference
         refund = msg.value - fee;
         if (refund > 0) {
             payable(msg.sender).transfer(refund);
