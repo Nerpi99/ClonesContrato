@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ethers } from 'ethers';
-import { factory_rinkeby_address, factory_mumbai_address, factory_bsc_address, factory_bscT_address } from '../contract/contract'
+import { factory_rinkeby_address, factory_mumbai_address, factory_bsc_address, factory_bscT_address, factory_abi } from '../contract/contract'
 
 const menuItems = [
     // {
@@ -61,6 +61,7 @@ export const NetworkProvider = ({ children }) => {
     // Variables
     const [currentNetwork, setCurrentNetwork] = React.useState("");
     const [contractAddress, setContractAddress] = React.useState("");
+    const [adminAddress, setAdminAddress] = React.useState("");
 
     // Funciones
     const getNetwork = async () => {
@@ -162,12 +163,32 @@ export const NetworkProvider = ({ children }) => {
         }
         await getNetwork();
     }
+    const getOwner = async () => {
+        try {
+            const { ethereum } = window;
+            if (ethereum) {
+                // Conecto al contrato
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                let contract = new ethers.Contract(contractAddress, factory_abi, provider);
+                // Obtengo el precio de tarifa
+                const owner = (await contract.owner());
+                setAdminAddress(owner);
+            } else {
+                console.log("No hay conexion a Metamask");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     React.useEffect(() => {
         getNetwork();
-    }, [])
+        getOwner();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [contractAddress])
 
     return (
-        <NetworkContext.Provider value={{ currentNetwork, getNetwork, switchNetwork, contractAddress }}>
+        <NetworkContext.Provider value={{ currentNetwork, getNetwork, switchNetwork, contractAddress, adminAddress }}>
             {children}
         </NetworkContext.Provider>
     );

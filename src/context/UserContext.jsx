@@ -3,10 +3,11 @@ import * as React from "react";
 const UserContext = React.createContext([]);
 
 UserContext.displayName = "UserContext";
+
 export const UserProvider = ({ children }) => {
     // Variables
     const [currentAccount, setCurrentAccount] = React.useState("");
-    const adminAddress = "0x8d96037b23f011f95b4dd288240b6beb6316f2c3";
+
     // Funciones
     const checkWallet = async () => {
         try {
@@ -54,9 +55,9 @@ export const UserProvider = ({ children }) => {
             console.log(`The account has changed to: ${accounts[0]}`)
         });
     }
-
+    
     return (
-        <UserContext.Provider value={{ currentAccount, adminAddress, connect, checkWallet }}>
+        <UserContext.Provider value={{ currentAccount, connect, checkWallet }}>
             {children}
         </UserContext.Provider>
     );

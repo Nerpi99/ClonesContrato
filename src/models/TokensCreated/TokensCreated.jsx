@@ -22,6 +22,7 @@ const TokensCreated = () => {
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
                 let contract = new ethers.Contract(contractAddress, factory_abi, signer);
+                // Obtengo todos los Tokens creados
                 await contract.getAllClones()
                     .then((e) => setTokensCreated(e))
                     .catch((error) => console.error(error))

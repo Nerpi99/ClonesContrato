@@ -37,7 +37,8 @@ const TokenForm = () => {
     const [error, setError] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
     const [tarifa, setTarifa] = React.useState("0.009781055");
-    const [link, setLink] = React.useState('')
+    const [link, setLink] = React.useState('');
+    const [noFunds, setNoFunds] = React.useState(false)
 
     // UserContext
     const { connect, currentAccount } = useUser();
@@ -54,6 +55,7 @@ const TokenForm = () => {
             setError(true);
             return;
         } else {
+            setNoFunds(false);
             setError(false);
             setSuccess(false);
             try {
@@ -78,7 +80,9 @@ const TokenForm = () => {
                     console.log("No hay conexion a Metamask");
                 }
             } catch (error) {
-                console.error(error);
+                if(error.code === -32603) {
+                    setNoFunds(true);
+                }
             }
         }
     }
@@ -228,6 +232,7 @@ const TokenForm = () => {
                     <Button variant="contained" type="submit" startIcon={<StarBorder />} sx={{ marginTop: '1rem', width: '80%', borderRadius: '13px' }} onClick={(e) => createNewToken(e)}>CREATE TOKEN</Button>
                     <Typography variant="overline" sx={{ marginTop: '1rem' }}>*El fee es de {tarifa} {coin} + gas</Typography>
                     {error && <Alert sx={{ marginBottom: '2rem' }} severity="error">Todos los espacios deben ser completados!</Alert>}
+                    {noFunds && <Alert sx={{ marginBottom: '2rem' }} severity="error">No tienes los fondos suficientes en MetaMask para realizar la transaccion.</Alert>}
                 </Box>
                 <div id="img-form">
                     <img src={ImagenFormulario} alt="imagen" height="610px" />

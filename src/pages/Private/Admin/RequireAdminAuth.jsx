@@ -1,11 +1,13 @@
 import * as React from 'react'
 import { useLocation, Navigate, Outlet } from 'react-router-dom';
 import { useUser } from '../../../context/UserContext';
+import { useNetwork } from '../../../context/NetworkContext';
 import { Skeleton } from '@mui/material';
 
 const RequireAdminAuth = () => {
     const [loading, setLoading] = React.useState(true)
-    const { currentAccount, adminAddress } = useUser();
+    const { currentAccount } = useUser();
+    const { adminAddress } = useNetwork();
     const location = useLocation();
     React.useEffect(() => {
         setTimeout(() => {

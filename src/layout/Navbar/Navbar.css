@@ -1,6 +1,6 @@
 nav#nav-bar {
   width: 100vw;
-  /* position: absolute; */
+  position: absolute;
   margin-top: 1rem;
   background-color: transparent; 
   color: #663dbd;
