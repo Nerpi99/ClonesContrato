@@ -90,7 +90,8 @@ contract Factory is Initializable, UUPSUpgradeable, OwnableUpgradeable  {
             _supply,
             _decimals
         );
-        // emit the newToken event 
+        allClones.push(Token(clone, _name, _symbol, msg.sender, _supply, block.timestamp, _decimals));
+        // emit the event 
         emit newToken(clone, _symbol, _name, msg.sender, _supply, _decimals);
         // Add the new token to clones array 
         clones[msg.sender].push(
